@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# reference human genome path + project directory
+ref="/groups/wyattgrp/users/jbacon/reference/matti_hg38/hg38_masked.fa"
+prof_dir="/groups/wyattgrp/projects/chordoma"
+
+#activate conda environment
+conda activate /home/zshong/miniconda3/envs/sigprofiler-env
+
+# mutect2 call on single bam file, replace _sample with actual sample name
+gatk Mutect2 \
+   -R ${ref} \
+   -I ${prof_dir}/alignments/_sample.bam \
+   -O _sample.vcf.gz
+   --native-pair-hmm-threads 30
+
+# mutect filter call on single vcf file, replace _sample with actual sample name
+# criterias: unique reads >= 8, median position from ends of read = 5
+gatk FilterMutectCalls \
+   -R ${ref} \
+   -V _sample.vcf.gz \
+   -unique 8 \ 
+   --min-median-read-position 5 \
+   -O _samplefiltered.vcf.gz
+
+# run in parallel mutect2 and filtermutect calls
+parallel -j 30  'sample=$(basename {} .bam); gatk Mutect2 \
+   -R "/groups/wyattgrp/users/jbacon/reference/matti_hg38/hg38_masked.fa" \
+   -I ${proj_dir}/alignments/$sample.bam \
+   -O $sample.vcf.gz
+   --native-pair-hmm-threads 30' ::: ${proj_dir}/alignments/*.bam
+
+parallel -j 30  'sample=$(basename {} .vcf.gz); gatk FilterMutectCalls \
+   -R /groups/wyattgrp/users/jbacon/reference/matti_hg38/hg38_masked.fa \
+   -V ${proj_dir}/mutations/signatures/mutect/$sample.vcf.gz" \
+   -unique 8 \
+   --min-median-read-position 6 \
+   --min-reads-per-strand 2 \
+   -O "$sample-filtered.vcf"' ::: ${proj_dir}/mutations/signatures/mutect/*.vcf.gz
+
+# run mutation signatures in python with SigProfiler
+# context_type options: 96, 288, 1536, DINUC, ID
+# assumes WES
+python
+from SigProfilerAssignment import Analyzer as Analyze
+Analyze.cosmic_fit(samples='./filtered', output='./sigprofiler', input_type="vcf", context_type="1536", exome=True, genome_build="GRCh38", exclude_signature_subgroups=['Artifact_signatures'], sample_reconstruction_plots="png")
+
+
