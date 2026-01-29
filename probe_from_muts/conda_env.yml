@@ -1,0 +1,15 @@
+name: probe_design
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - nextflow
+  - python=3.10
+  - pandas
+  - numpy
+  - biopython
+  - bedtools
+  - blat
+  - bioconda::seqkit
+  - openjdk=17

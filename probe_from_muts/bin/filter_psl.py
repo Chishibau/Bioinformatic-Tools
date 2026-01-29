@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """
 Output invalid probes from BLAT PSL output according to these rules:

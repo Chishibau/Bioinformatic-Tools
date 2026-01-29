@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Created on Wed Mar 6 07:41:52 2024
 @author: jbacon, zshong
@@ -106,11 +105,15 @@ def make_plot(samples, seq_stats, gene_list_file, plot_output_dir, cnrdir_violin
             cnr_file = os.path.join(cnrdir_violin, sample+'.cnn.fix')
 
         if Path(vardir_violin+sample+".table").exists():
+            print("Found .table file.")
             var_file = os.path.join(vardir_violin, sample+".table")
         else:
+            print(".table not found file.")
             var_file = os.path.join(vardir_violin, sample+".tsv")
         
         log2_df_violin = pd.read_csv(cnr_file, sep='\t')
+        print(os.path.join(vardir_violin, sample+".table"))
+        print(var_file)
         vcf_violin = pd.read_csv(var_file, sep='\t')
 
         wbc_columns = vcf_violin.filter(regex=r"(?i)(WBC|gDNA)", axis=1).columns      
@@ -462,6 +465,8 @@ def main():
     cnr_files = sorted([f.split(".")[0] for f in os.listdir(args.cnr_dir) if f.endswith(".cnr") or f.endswith(".cnn.fix")])
     var_files = sorted([os.path.splitext(f)[0] for f in os.listdir(args.var_dir) if f.endswith(".table") or f.endswith(".tsv")])
     samples = sorted(list(set(cnr_files) & set(var_files)))
+    
+    print(samples)
 
     if not samples:
         raise ValueError('No matching vcf and cnr files found in the given directories')

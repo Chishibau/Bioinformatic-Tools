@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+#!/usr/bin/env python
 """
 Created on Fri Oct 17 14:07:07 2025
 
@@ -13,11 +12,6 @@ import sys
 
 def generate_bed(path_tsv, path_output, chrom_col, pos_col, id_col, size):
     data = pd.read_csv(path_tsv, sep='\t')
-
-    # filter for whitelist muts
-    # data = data[data['call'] == 'W']
-    # filter out mitochondrial chromosome
-    data = data[~(data[chrom_col] == 'M')]
     
     # generate regions of 200 bp around each mutation position (+- 100 bp upstream and downstream)
     bed = pd.DataFrame()
