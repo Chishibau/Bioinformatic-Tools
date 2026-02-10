@@ -21,6 +21,7 @@ params.output      = "./probe_filtering"
 params.size        = 100
 params.probe_size  = 120
 params.blat_threshold = 40
+params.bp_homopoly =5
 
 process MAKE_REGIONS {
     tag "${muts_file.simpleName}"
@@ -170,13 +171,14 @@ process HOMOPOLYMERS {
     tuple val(sample_id), path(fasta)
 
     output:
-    tuple val(sample_id), path("homopolymers_invalid-ids.txt")
+    tuple val(sample_id), path("homopolymers_invalid_ids.txt")
 
     script:
     """
     find_homopolymers.py \
-        --path_output homopolymers_invalid-ids.txt \
+        --path_output homopolymers_invalid_ids.txt \
         --path_input ${fasta}
+        --bp ${params.bp_homopoly}
     """
 }
 
@@ -188,7 +190,7 @@ process APPLY_FILTERS {
     tuple val(sample_id), path(all_ids), path(invalid_secondary), path(invalid_crit), path(valid_gc), path(invalid_hpoly)
 
     output:
-    tuple val(sample_id), path("final_probes.txt")
+    tuple val(sample_id), path("qualified_probes.txt")
 
     script:
     """
@@ -202,7 +204,7 @@ process APPLY_FILTERS {
     # remove muts with perfect match secondary alignments
     sort no_off${params.blat_threshold}.txt | uniq -u > no_secondary.txt
 
-    # remove add. criteria-invalid
+    # remove add_criteria-invalid
     awk 'NR==FNR{bad[\$1];next} !(\$1 in bad)' ${invalid_crit} no_secondary.txt > addcritera_secondary_filtered.txt
 
     # keep GC good
@@ -314,9 +316,10 @@ workflow {
             tuple(sample_id, all_ids, invalid_sec, invalid_crit, valid_gc, invalid_hpoly)
         }
     
-    // Final steps
+    // Apply all filters and get probe with mut closest to center
     stats_ch = combined_ch | APPLY_FILTERS | CLOSEST_CENTER
     
+    // Merge back onto original muts file
     MERGE_PROBES(stats_ch.join(muts_ch.map { file -> tuple(file.simpleName, file) }))
     CHECK_CLOSE_MUTS(stats_ch)
 }
