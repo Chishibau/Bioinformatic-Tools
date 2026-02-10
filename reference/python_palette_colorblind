@@ -1,0 +1,11 @@
+cbb_palette = [
+    "#000000",  # black
+    "#999999",  # grey
+    "#E69F00",  # orange
+    "#56B4E9",  # sky blue
+    "#009E73",  # turquoise
+    "#F0E442",  # yellow
+    "#0072B2",  # dark blue
+    "#D55E00",  # dark orange
+    "#CC79A7",  # pink
+]
