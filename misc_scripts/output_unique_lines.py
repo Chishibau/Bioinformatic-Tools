@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Memory-efficient version for filtering large files.
-Output lines from file1 that are not in file2 based on the first 8 columns.
+Output lines from file1 that are not in file2 based on the first 7 columns.
 
 
 python /groups/wyattgrp/users/zshong/codebook/misc_scripts/output_unique_lines.py file1.tsv file2.tsv output.tsv
@@ -32,7 +32,7 @@ def filter_unique_lines_efficient(file1, file2, output_file, sep='\t', chunksize
     df2 = pd.read_csv(file2, sep=sep)
     
     # Get first 8 column names
-    cols_to_compare = df2.columns[:8].tolist()
+    cols_to_compare = df2.columns[:7].tolist()
     print(f"Comparing based on columns: {cols_to_compare}")
     
     # Create a set of tuples from file2's first 8 columns

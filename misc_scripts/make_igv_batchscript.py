@@ -11,7 +11,7 @@ Example:
     python generate_igv_batch.py mutations.tsv igv_batch.txt /path/to/crams
     python generate_igv_batch.py mutations.tsv igv_batch.txt /path/to/crams --snapshot-dir /path/to/snapshots --wbc-map samples.tsv
 
-    python /groups/wyattgrp/users/zshong/codebook/misc_scripts/make_igv_batchscript.py /groups/wyattgrp/projects/brachy_tracks/probe_selection/probe_filtering/crpc2022_noncoding_VAF10_depth50p/results/muts_with_probe_label.tsv /groups/wyattgrp/projects/brachy_tracks/mutations/igv_batchscript.txt /groups/wyattgrp/projects/brachy_tracks/cram_alignments --snapshot-dir /groups/wyattgrp/projects/brachy_tracks/mutations/igv_noncoding_crpc2022genes_VAF10_depth50p --wbc-map /groups/wyattgrp/projects/brachy_tracks/reference/sample_wbc_mapping.tsv
+python /groups/wyattgrp/users/zshong/codebook/misc_scripts/make_igv_batchscript.py /groups/wyattgrp/projects/brachy_tracks/mutations/igv_coding_VAF80p_depth20p/rerun_muts.tsv /groups/wyattgrp/projects/brachy_tracks/mutations/igv_coding_VAF80p_depth20p/igv_batchscript.txt /groups/wyattgrp/projects/brachy_tracks/cram_alignments --snapshot-dir /groups/wyattgrp/projects/brachy_tracks/mutations/igv_coding_VAF80p_depth20p/ --wbc-map /groups/wyattgrp/projects/brachy_tracks/reference/sample_wbc_mapping.tsv --genome /groups/wyattgrp/reference/hg38/hg38.fa
 """
 
 import pandas as pd
@@ -175,7 +175,10 @@ def generate_igv_batch_script(mutations_file, output_script, cram_dir, config=No
                 snapshot_name = f"{sample},{gene}.{chrom_num}.{real_pos}.{effect}.png"
                 
                 f.write(f'snapshot {snapshot_name}\n')
-    
+
+        # Close IGV after all screenshots are saved
+        f.write('\nexit\n')
+        
     print(f"\nIGV batch script written to: {output_script}")
     print(f"Snapshots will be saved to: {config['snapshot_dir']}")
 

@@ -177,7 +177,7 @@ process HOMOPOLYMERS {
     """
     find_homopolymers.py \
         --path_output homopolymers_invalid_ids.txt \
-        --path_input ${fasta}
+        --path_input ${fasta} \
         --bp ${params.bp_homopoly}
     """
 }
@@ -211,12 +211,8 @@ process APPLY_FILTERS {
     awk 'NR==FNR{good[\$1];next} (\$1 in good)' ${valid_gc} addcritera_secondary_filtered.txt > gc_passed.txt
 
     # remove homopolymers invalid
-    awk 'NR==FNR{bad[\$1];next} !(\$1 in bad)' ${invalid_hpoly} gc_passed.txt > final_probes.txt
-    
-    # If empty, create with at least a comment for debugging
-    if [ ! -s final_probes.txt ]; then
-        echo "# No probes passed all filters" > final_probes.txt
-    fi
+    awk 'NR==FNR{bad[\$1];next} !(\$1 in bad)' ${invalid_hpoly} gc_passed.txt > qualified_probes.txt
+
     """
 }
 

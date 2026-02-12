@@ -2,8 +2,8 @@
 
 import pandas as pd
 
-file = "/groups/wyattgrp/projects/brachy_tracks/mutations/mut_analyze_mapq20/muts_noncoding_VAF.tsv"
-genes = "/groups/wyattgrp/users/jbacon/reference/panel_genelists/crpc2022.txt"
+file = "/groups/wyattgrp/projects/brachy_tracks/mutations/mut_analyze_mapq20/muts_coding_VAF.tsv"
+genes = "/groups/wyattgrp/projects/brachy_tracks/reference/crpc2022_genes_CHIP_excluded.txt"
 output = "/groups/wyattgrp/projects/brachy_tracks/probe_selection/target_genes/mapq20/crpc2022_coding_mapq20.tsv"
 
 df = pd.read_csv(file, sep="\t")
