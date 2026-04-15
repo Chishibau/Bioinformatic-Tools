@@ -21,7 +21,7 @@ params.output      = "./probe_filtering"
 params.size        = 100
 params.probe_size  = 120
 params.blat_threshold = 40
-params.bp_homopoly =5
+params.bp_homopoly = 5
 
 process MAKE_REGIONS {
     tag "${muts_file.simpleName}"

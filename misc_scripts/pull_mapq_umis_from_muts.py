@@ -144,9 +144,9 @@ def get_mapq_stats(mapq_list):
 
 #%% Load data and process
 
-muts = pd.read_csv("/groups/wyattgrp/users/zshong/projects/bladder_wgs/mutation_curation/nc_uncurated.tsv", sep="\t")
+muts = pd.read_csv("/groups/wyattgrp/users/zshong/projects/tmp_outputs/BT_panel_muts.tsv", sep="\t")
 
-muts["bam"] = "/groups/wyattgrp/projects/uc_metacohort/alignments/" + muts["Sample"] + ".bam"
+muts["bam"] = "/groups/wyattgrp/projects/brachy_tracks/cram_alignments/" + muts["Sample"] + ".cram"
 
 # Get MAPQ values for each mutation
 print("Extracting MAPQ values...")
@@ -165,6 +165,6 @@ muts[["mean_mapq", "median_mapq", "min_mapq"]] = muts["mapq_list"].apply(
 # muts = muts.drop('mapq_list', axis=1)  # Uncomment to remove the list column
 
 # Save output
-output_path = "/groups/wyattgrp/users/zshong/projects/bladder_wgs/mutation_curation/nc_uncurated_mapq.tsv"
+output_path = "/groups/wyattgrp/users/zshong/projects/tmp_outputs/BT_panel_MAPQ_annotated.tsv"
 muts.to_csv(output_path, sep="\t", index=False)
 print(f"Saved to {output_path}")

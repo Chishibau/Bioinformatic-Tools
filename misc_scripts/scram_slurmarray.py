@@ -68,15 +68,16 @@ ARGUMENTS:
                         default="scram"
 
 Example usage:
-    /groups/wyattgrp/users/zshong/projects/to_scram/scram_slurmarray.py \
-        --fq_dir /groups/wyattgrp/projects/mannas_collab/fastq \
+    /groups/wyattgrp/users/zshong/codebook/misc_scripts/scram_slurmarray.py \
+        --fq_dir /groups/wyattgrp/projects/brachy_tracks/apr_2026_alignments/fqs \
         --ref_dir /groups/wyattgrp/users/jpham/references/hg38/bwamem2_index_matti/ \
         --ref_name hg38 \
-        --out_dir /groups/wyattgrp/users/zshong/projects/to_scram/to_backup \
+        --out_dir /groups/wyattgrp/users/zshong/projects/to_scram/BT_WGS \
         --conda_env scram \
         --sbatch_time "UNLIMITED" \
-        --sbatch_cpus "16" \
-        --sbatch_mem "64"
+        --sbatch_cpus "8" \
+        --sbatch_mem "32" \
+        --array_max_concurrent 10
 
 ================================================================      
 END USAGE INFORMATION  Author: Zoe Shong

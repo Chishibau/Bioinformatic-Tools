@@ -11,8 +11,8 @@ ARGUMENTS:
     --logs_dir  absolute path to directory containing scram conversion log files
 
 Example usage:
-/groups/wyattgrp/users/zshong/projects/to_scram/check_scram.py \
-    --logs_dir /groups/wyattgrp/users/zshong/projects/to_scram/to_backup/logs
+/groups/wyattgrp/users/zshong/codebook/misc_scripts/check_scram.py \
+    --logs_dir /groups/wyattgrp/users/zshong/projects/to_scram/PROTRACT_WES/logs
 
 
 ================================================================      
