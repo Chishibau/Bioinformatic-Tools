@@ -45,6 +45,7 @@ It is recommended to run this pipeline with a SLURM job executer for faster runt
 | --probe_size | 120 | length of probe (in bp)
 | --blat_threshold | 40 | cutoff threshold for quality of secondary alignment for candidate probe sequences (lower is stricter)
 | --bp_homopolymer | 5 | cutoff threshold for homopolymer filtering of probe sequences in bp (lower is stricter, exclusive)
+| --output | ./probe_filtering | path to directory for pipeline outputs
 
 #### Required Mutation File Format
 
