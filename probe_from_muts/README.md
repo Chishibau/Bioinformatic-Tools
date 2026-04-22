@@ -149,7 +149,7 @@ If pipineline is called with multiple mutation files, each mutation file will re
 : table of qualified probe_ids with mutation closest to center with columns indicating distance of mutation from the start of the probe sequence
 
 - *qualified_probes.txt*
-: list of all probe_ids that passed all the filtering criterias, may contain mroe than 1 probe_id for a specific mutation
+: list of all probe_ids that passed all the filtering criterias, may contain more than 1 probe_id for a specific mutation
 
 
 **results/**
