@@ -1,0 +1,9 @@
+name: mrd_stats
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - nextflow
+  - bcftools
+  - pandas
